@@ -7,7 +7,7 @@ lockPath="/yapi/init.lock"
 if [ ! -f "$lockPath" ]; then
   # 设置源为淘宝源
   npm config set registry http://registry.npm.taobao.org/;
-  # 全局安装用来更细yapi的cli
+  # 全局安装用来更新yapi的cli
   npm i -g node-gyp yapi-cli;
   # 安装初始化的依赖模块
   cd /yapi/vendors/ && npm i --production;
