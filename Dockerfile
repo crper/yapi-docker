@@ -24,7 +24,7 @@ COPY config.json /yapi/
 # 复制执行脚本到容器的执行目录
 COPY entrypoint.sh /usr/local/bin/
 # 写好的vim配置文件复制进去
-COPY .vimrc ~/
+COPY .vimrc /root/
 # 向外暴露的端口
 EXPOSE 3000
 
