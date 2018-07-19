@@ -86,3 +86,30 @@ yapi update -v v1.1.0 //升级到指定版本
 ```
 
 升级完毕重启`node`程序亦或者重启容器即可!!
+
+----
+
+# 错误
+
+在初始化的时候,执行
+
+`docker logs --details 容器ID`
+
+查看内部终端的执行过程,npm国内源也不一定靠谱,
+
+这时候就需要进去换其他源了
+
+```javaScript
+  // npm config set registry [url]
+  npm ---- https://registry.npmjs.org/
+  cnpm --- http://r.cnpmjs.org/
+  taobao - http://registry.npm.taobao.org/
+  eu ----- http://registry.npmjs.eu/
+  au ----- http://registry.npmjs.org.au/
+  sl ----- http://npm.strongloop.com/
+  nj ----- https://registry.nodejitsu.com/
+
+```
+
+接着就是参考`entrypoint.sh`里面的初始化,
+依赖安装完成就可以了

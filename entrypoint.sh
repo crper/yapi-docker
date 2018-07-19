@@ -19,5 +19,6 @@ if [ ! -f "$lockPath" ]; then
   # 启动Yapi初始化
   node server/install.js
 else
+  # 运行yapi管理系统
   node server/app.js
 fi
