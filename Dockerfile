@@ -14,8 +14,8 @@ RUN apk update \
   && apk add --no-cache  git nodejs nodejs-current-npm bash vim  python python-dev gcc libcurl make\
   && rm -rf /var/cache/apk/* \
   && mkdir /yapi && cd /yapi && git clone https://github.com/YMFE/yapi.git vendors \
-  &&  npm i -g node-gyp yapi-cli \
-  && npm i --production;
+  && npm i -g node-gyp yapi-cli \
+  && cd /yapi/vendors && npm i --production;
 # 工作目录
 WORKDIR /yapi/vendors
 # 配置yapi的配置文件
@@ -31,7 +31,6 @@ EXPOSE 3000
 ENTRYPOINT ["entrypoint.sh"]
 
 
-# `shadow`: `alpine`默认不集成`usermod`,所以需要这个额外包,因为要用来更改默认`shell`
 # `vim` : 编辑神器
 # `tar` : 解压缩
 # `make`: 编译依赖的
