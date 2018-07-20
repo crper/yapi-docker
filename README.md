@@ -51,25 +51,35 @@
 ---
 
 # 初始化Yapi和启动Yapi
+#### 初始化yapi
 
 - `docker run -d --name yapi -p 3000:3000 --link yapi-mongo  crper/yapi`
 
+
 这里比上面多的一个参数就是`--link`,用来使连个容器通讯的,过时命令,官方已经不推荐
+
+#### 启动yapi
+
+- `docker restart yapi`
+
+
+**过程均可用**`docker logs details 容器ID或者name`来看到内部的情况
+
+就是`shell`执行过程,比如这个项目就可以在初始化的时候,看到初始化的账号密码(成功)
 
 
 不管是`mongo`还是`crper/yapi` ,当你请求一个容器不存在的时候,
 
 会尝试往`dockhub`上面找,默认拉取镜像`latest`版本,找不到才会报错
 
-没有报错的话,会直接输出一个容器ID,重启下容器即可使用(因为第一次执行是初始化,第二次运行之后才会直接启动程序,看`sh`)
-
-`docker restart yapi`
+以下就是基本的初始化信息
 
 ```bash
 访问链接: 127.0.0.1:3000
 默认的账户名: config.json =>  adminAccount 这个字段的值
 密码: ymfe.org
 ```
+
 
 ---
 
@@ -95,28 +105,32 @@ yapi update -v v1.1.0 //升级到指定版本
 
 `docker logs --details 容器ID`
 
-查看内部终端的执行过程,npm国内源也不一定靠谱,
+查看内部终端的执行过程,npm的一些源也不一定靠谱,
 
-这时候就需要进去换其他源了
+若是提示`npm`安装报错了,就需要进去换其他源了
 
-```javaScript
-  // npm config set registry [url]
-  npm ---- https://registry.npmjs.org/
-  cnpm --- http://r.cnpmjs.org/
-  taobao - http://registry.npm.taobao.org/
-  eu ----- http://registry.npmjs.eu/
-  au ----- http://registry.npmjs.org.au/
-  sl ----- http://npm.strongloop.com/
-  nj ----- https://registry.nodejitsu.com/
+先启动`crper/yapi`镜像,然后跟着教程走
 
-```
+
 
 ```javascript
-// 不管有没有安装了部分的npm模块,我们都应该先干掉node_modules(不管是否存在)
-这样重新安装依赖才会比较干净
+// npm config set registry [url]
+// npm ---- https://registry.npmjs.org/
+// cnpm --- http://r.cnpmjs.org/
+// taobao - http://registry.npm.taobao.org/
+// eu ----- http://registry.npmjs.eu/
+// au ----- http://registry.npmjs.org.au/
+// sl ----- http://npm.strongloop.com/
+// nj ----- https://registry.nodejitsu.com/
 
-// 进到vendors目录, 设置源为淘宝源
-npm config set registry http://registry.npm.taobao.org/;
+
+// 进入到vendors目录
+// 若是有node_modules目录,
+// 我们都应该先干掉node_modules
+// 这样重新安装依赖才会比较干净
+
+// 进到vendors目录, 比如设置回官方源
+npm config set registry https://registry.npmjs.org/;
 
 // 安装全局升级工具和依赖编译的npm模块
 npm i -g node-gyp yapi-cli \
@@ -127,6 +141,4 @@ node server/install.js
 
 ```
 
-依赖安装完成就可以再重新初始化
-
-重启容器即可
+依赖安装完成就可以再重新初始化,然后重启容器即可
