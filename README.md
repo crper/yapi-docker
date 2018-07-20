@@ -51,19 +51,11 @@
 ---
 
 # 初始化Yapi和启动Yapi
-#### 初始化yapi
 
 - `docker run -d --name yapi -p 3000:3000 --link yapi-mongo  crper/yapi`
 
 
 这里比上面多的一个参数就是`--link`,用来使连个容器通讯的,过时命令,官方已经不推荐
-
-**1.1版本尝试自动启动yapi服务,若初始化成功后**
-
-#### 启动yapi
-
-- `docker restart yapi`
-
 
 **过程均可用**`docker logs details 容器ID或者name`来看到内部的情况
 
@@ -87,6 +79,8 @@
 
 # 升级yapi
 
+## 手动升级
+
 因为不涉及到容器处理..只是单纯的文件替换,官方也提供了方案,那个`cli`已经默认集成到容器里面
 
 ```javascript
@@ -98,6 +92,10 @@ yapi update -v v1.1.0 //升级到指定版本
 ```
 
 升级完毕重启`node`程序亦或者重启容器即可!!
+
+## 自动升级
+
+- `docker exec -it 容器ID|name  update`
 
 ----
 
