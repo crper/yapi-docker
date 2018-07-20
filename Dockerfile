@@ -27,11 +27,12 @@ COPY .vimrc /root/
 # 向外暴露的端口
 EXPOSE 3000
 
-# 配置入口为shell
-ENTRYPOINT ["/bin/bash"]
+# 配置入口为bash shell
+ENTRYPOINT ["/bin/bash","entrypoint.sh"]
 
-# 默认执行
-CMD ["entrypoint.sh"]
+
+# 默认参数
+CMD [""]
 
 # `vim` : 编辑神器
 # `tar` : 解压缩
