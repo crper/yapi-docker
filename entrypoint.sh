@@ -13,6 +13,8 @@ cd /yapi/vendors
 if [ ! -f "$lockPath" ]; then
   # 启动Yapi初始化
   node server/install.js
+  # 若是初始化成功的情况下直接运行yapi
+  node server/app.js
 else
   # 运行yapi管理系统
   node server/app.js
