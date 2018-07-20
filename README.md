@@ -111,5 +111,22 @@ yapi update -v v1.1.0 //升级到指定版本
 
 ```
 
-接着就是参考`entrypoint.sh`里面的初始化,
-依赖安装完成就可以了
+```javascript
+// 不管有没有安装了部分的npm模块,我们都应该先干掉node_modules(不管是否存在)
+这样重新安装依赖才会比较干净
+
+// 进到vendors目录, 设置源为淘宝源
+npm config set registry http://registry.npm.taobao.org/;
+
+// 安装全局升级工具和依赖编译的npm模块
+npm i -g node-gyp yapi-cli \
+npm i --production;
+
+// 初始化 yapi
+node server/install.js
+
+```
+
+依赖安装完成就可以再重新初始化
+
+重启容器即可

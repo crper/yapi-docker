@@ -6,17 +6,18 @@ LABEL MAINTAINER = 'crper@outlook.com(https://github.com/crper)'
 # - 替换国内源,速度杠杠的
 # - 更新源
 # - 安装基础环境包
-# - 更改用户的默认shell , 因为容器只是给yapi用,所以就不考虑创建用户组和独立用户这种东西,所以只有root用户了
-#   ,若是容器包括多功能就需要用户组这些好一些(不推荐容器有太多功能),尽可能保持容器功能的单一性
+# - 不用更改默认shell了,只要进入的镜像的时候指定shell即可
 # - 最后是删除一些缓存
 # - 克隆项目
+# - 采用自动化构建不考虑国内npm源了 , 可以降低初始化失败的概率
 # !! yapi 官方的内网部署教程: https://yapi.ymfe.org/devops/index.html
-RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories \
-  && apk update \
-  && apk add --no-cache shadow git nodejs nodejs-current-npm bash vim tar curl python python-dev py-pip gcc libcurl make\
+RUN apk update \
+  && apk add --no-cache  git nodejs nodejs-current-npm bash vim tar curl python python-dev py-pip gcc libcurl make\
   && usermod -s /bin/bash root \
   && rm -rf /var/cache/apk/* \
-  && mkdir /yapi && cd /yapi && git clone https://gitee.com/mirrors/YApi.git vendors
+  && mkdir /yapi && cd /yapi && git clone https://github.com/YMFE/yapi.git vendors \
+  &&  npm i -g node-gyp yapi-cli \
+  && npm i --production;
 # 工作目录
 WORKDIR /yapi/vendors
 # 配置yapi的配置文件
