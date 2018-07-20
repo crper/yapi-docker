@@ -93,9 +93,7 @@ yapi update -v v1.1.0 //升级到指定版本
 
 升级完毕重启`node`程序亦或者重启容器即可!!
 
-## 自动升级
 
-- `docker exec -it 容器ID|name  update`
 
 ----
 
