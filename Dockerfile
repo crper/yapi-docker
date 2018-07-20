@@ -1,9 +1,8 @@
 # 基于 alpine镜像构建
-FROM alpine:3.8
+FROM alpine:latest
 # 镜像维护者的信息
 LABEL MAINTAINER = 'crper@outlook.com(https://github.com/crper)'
 # 基础环境构建
-# - 替换国内源,速度杠杠的
 # - 更新源
 # - 安装基础环境包
 # - 不用更改默认shell了,只要进入的镜像的时候指定shell即可
@@ -12,8 +11,7 @@ LABEL MAINTAINER = 'crper@outlook.com(https://github.com/crper)'
 # - 采用自动化构建不考虑国内npm源了 , 可以降低初始化失败的概率
 # !! yapi 官方的内网部署教程: https://yapi.ymfe.org/devops/index.html
 RUN apk update \
-  && apk add --no-cache  git nodejs nodejs-current-npm bash vim tar curl python python-dev py-pip gcc libcurl make\
-  && usermod -s /bin/bash root \
+  && apk add --no-cache  git nodejs nodejs-current-npm bash vim  python python-dev gcc libcurl make\
   && rm -rf /var/cache/apk/* \
   && mkdir /yapi && cd /yapi && git clone https://github.com/YMFE/yapi.git vendors \
   &&  npm i -g node-gyp yapi-cli \
