@@ -1,4 +1,4 @@
-# 使用版本号为3.3
+# 使用版本号为3.6
 version: '3.6'
 services:
   # 声明yapi服务
@@ -9,7 +9,7 @@ services:
     container_name:  yapi
     # 不用: 则只是暴露内部端口,用了就是映射外部访问的接口 , -p
     ports:
-      - 3000:3000
+      - "3000:3000"
     # 单个主机上用bridge(桥接)居多,Swarm(集群)上的overlay, 还有几个模式,比如host
     networks:
       - yapi
@@ -30,10 +30,10 @@ services:
       - yapi
     container_name:  yapi-mongo
     ports:
-      - 27017:27017
+      - "27017:27017"
     # 映射卷
     volumes:
-      - yapi-mongo:/data/db
+      - "yapi-mongo:/data/db"
 
 # 自定义的网络名
 networks:
