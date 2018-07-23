@@ -1,0 +1,48 @@
+# 使用版本号为3.3
+version: '3.6'
+services:
+  # 声明yapi服务
+  yapi:
+    # 选择的镜像
+    image:  crper/yapi:latest
+    # 容器的自定义名字,也就是命令行的--name
+    container_name:  yapi
+    # 不用: 则只是暴露内部端口,用了就是映射外部访问的接口 , -p
+    ports:
+      - 3000:3000
+    # 单个主机上用bridge(桥接)居多,Swarm(集群)上的overlay, 还有几个模式,比如host
+    networks:
+      - yapi
+    # 启动的时候依赖哪个镜像
+    depends_on:
+      - yapi-mongo
+    dns:
+      - 114.114.114.114
+      - 8.8.8.8
+    # 容器重启策略,这里是开启了任何错误都会默认重启
+    restart:  always
+  # mongo服务
+  yapi-mongo:
+    restart:  always
+    image:  mongo:latest
+    networks:
+      - yapi
+    container_name:  yapi-mongo
+    # 映射卷
+    volumes:
+      - yapi-mongo:/data/db
+
+# 自定义的网络名
+networks:
+  yapi:
+
+# 待映射的volume
+volumes:
+  yapi-mongo:
+
+
+
+# 配置还有很多,比如什么子网,传参,日志输出,dns,临时文件夹,网络模式,资源分配等等
+# 还能直接在里面构建镜像,而不用去用现有的
+# 参数很多,所以要熟悉的配置也是比较麻烦的,这种东西只能一点点的去总结经验
+# 具体看官方网站对compose的介绍 :  https: //docs.docker.com/compose/compose-file/
