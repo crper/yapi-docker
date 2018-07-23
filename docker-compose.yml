@@ -16,6 +16,7 @@ services:
     # 启动的时候依赖哪个镜像
     depends_on:
       - yapi-mongo
+    # 设置容器的DNS服务
     dns:
       - 114.114.114.114
       - 8.8.8.8
@@ -28,6 +29,8 @@ services:
     networks:
       - yapi
     container_name:  yapi-mongo
+    ports:
+      - 27017:27017
     # 映射卷
     volumes:
       - yapi-mongo:/data/db
